@@ -1,7 +1,6 @@
 package com.appdirect.app.security;
 
 
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +18,7 @@ import org.springframework.security.oauth.provider.filter.OAuthProviderProcessin
 import org.springframework.security.oauth.provider.filter.ProtectedResourceProcessingFilter;
 import org.springframework.security.oauth.provider.token.InMemoryProviderTokenServices;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests().anyRequest().authenticated()
             .and()
-            .addFilter(oAuthProviderProcessingFilter());
+            .addFilterBefore(oAuthProviderProcessingFilter(), BasicAuthenticationFilter.class);
     }
 
     @Bean
