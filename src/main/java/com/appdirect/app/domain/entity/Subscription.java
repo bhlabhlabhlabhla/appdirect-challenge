@@ -5,7 +5,6 @@ package com.appdirect.app.domain.entity;
 import com.appdirect.app.domain.entity.type.SubscriptionState;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,17 +14,38 @@ public class Subscription extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String accountIdentifier;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
-    private Company company;
+    @Column(unique = true, nullable = false)
+    private String companyUuid;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
-    private MarketPlace marketPlace;
+    @Column
+    private String companyCountry;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
-    private Order order;
+    @Column
+    private String companyName;
+
+    @Column
+    private String companyPhoneNumber;
+
+    @Column
+    private String companyWebsite;
+
+    @Column
+    private String baseUrl;
+
+    @Column
+    private String partner;
+
+    @Column
+    private String editionCode;
+
+    @Column
+    private String pricingDuration;
+
+    @Column
+    private Long maxOrderItems;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = false, mappedBy = "subscription")
+    private Set<OrderItem> items;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -45,28 +65,92 @@ public class Subscription extends BaseEntity {
         this.accountIdentifier = accountIdentifier;
     }
 
-    public Company getCompany() {
-        return company;
+    public String getCompanyUuid() {
+        return companyUuid;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setCompanyUuid(String companyUuid) {
+        this.companyUuid = companyUuid;
     }
 
-    public MarketPlace getMarketPlace() {
-        return marketPlace;
+    public String getCompanyCountry() {
+        return companyCountry;
     }
 
-    public void setMarketPlace(MarketPlace marketPlace) {
-        this.marketPlace = marketPlace;
+    public void setCompanyCountry(String companyCountry) {
+        this.companyCountry = companyCountry;
     }
 
-    public Order getOrder() {
-        return order;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCompanyPhoneNumber() {
+        return companyPhoneNumber;
+    }
+
+    public void setCompanyPhoneNumber(String companyPhoneNumber) {
+        this.companyPhoneNumber = companyPhoneNumber;
+    }
+
+    public String getCompanyWebsite() {
+        return companyWebsite;
+    }
+
+    public void setCompanyWebsite(String companyWebsite) {
+        this.companyWebsite = companyWebsite;
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
+    public String getPartner() {
+        return partner;
+    }
+
+    public void setPartner(String partner) {
+        this.partner = partner;
+    }
+
+    public String getEditionCode() {
+        return editionCode;
+    }
+
+    public void setEditionCode(String editionCode) {
+        this.editionCode = editionCode;
+    }
+
+    public String getPricingDuration() {
+        return pricingDuration;
+    }
+
+    public void setPricingDuration(String pricingDuration) {
+        this.pricingDuration = pricingDuration;
+    }
+
+    public Long getMaxOrderItems() {
+        return maxOrderItems;
+    }
+
+    public void setMaxOrderItems(Long maxOrderItems) {
+        this.maxOrderItems = maxOrderItems;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<OrderItem> items) {
+        this.items = items;
     }
 
     public SubscriptionState getState() {
@@ -89,9 +173,17 @@ public class Subscription extends BaseEntity {
     public String toString() {
         return "Subscription{" +
                 "accountIdentifier='" + accountIdentifier + '\'' +
-                ", company=" + company +
-                ", marketPlace=" + marketPlace +
-                ", order=" + order +
+                ", companyUuid='" + companyUuid + '\'' +
+                ", companyCountry='" + companyCountry + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", companyPhoneNumber='" + companyPhoneNumber + '\'' +
+                ", companyWebsite='" + companyWebsite + '\'' +
+                ", baseUrl='" + baseUrl + '\'' +
+                ", partner='" + partner + '\'' +
+                ", editionCode='" + editionCode + '\'' +
+                ", pricingDuration='" + pricingDuration + '\'' +
+                ", maxOrderItems=" + maxOrderItems +
+                ", items=" + items +
                 ", state=" + state +
                 ", subscriptionUsers=" + subscriptionUsers +
                 '}';

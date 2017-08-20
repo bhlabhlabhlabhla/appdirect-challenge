@@ -1,7 +1,6 @@
 package com.appdirect.app.domain.entity;
 
 
-
 import javax.persistence.*;
 
 @Entity
@@ -16,7 +15,7 @@ public class OrderItem extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
-    private Order order;
+    private Subscription subscription;
 
 
     public OrderItem() {
@@ -38,12 +37,12 @@ public class OrderItem extends BaseEntity {
         this.unit = unit;
     }
 
-    public Order getOrder() {
-        return order;
+    public Subscription getSubscription() {
+        return subscription;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setSubscription(Subscription subscription) {
+        this.subscription = subscription;
     }
 
     @Override
@@ -51,7 +50,7 @@ public class OrderItem extends BaseEntity {
         return "OrderItem{" +
                 "quantity=" + quantity +
                 ", unit='" + unit + '\'' +
-                ", order=" + order +
+                ", subscription=" + subscription +
                 '}';
     }
 }
