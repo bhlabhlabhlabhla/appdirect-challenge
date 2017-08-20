@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,7 +19,7 @@ import org.springframework.security.oauth.provider.filter.OAuthProviderProcessin
 import org.springframework.security.oauth.provider.filter.ProtectedResourceProcessingFilter;
 import org.springframework.security.oauth.provider.token.InMemoryProviderTokenServices;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.session.ConcurrentSessionFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -40,15 +41,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/api/v1/integration/**").csrf().disable()
+        http.antMatcher("/api/**").csrf().disable()
             .exceptionHandling().authenticationEntryPoint(new UnauthorizedRequestExceptionHandler())
             .and()
-            .authorizeRequests().anyRequest().authenticated()
-            .and()
-            .addFilterBefore(oAuthProviderProcessingFilter(), BasicAuthenticationFilter.class);
+//            .authorizeRequests().anyRequest().permitAll()
+//            .and()
+            .addFilterBefore(oAuthProviderProcessingFilter(), ConcurrentSessionFilter.class);
     }
 
     @Bean
+    @Order(1)
     public OAuthProviderProcessingFilter oAuthProviderProcessingFilter() {
 
         final ProtectedResourceProcessingFilter filter = new ProtectedResourceProcessingFilter() {
