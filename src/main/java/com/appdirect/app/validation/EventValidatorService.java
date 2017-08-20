@@ -33,11 +33,13 @@ public class EventValidatorService {
         String errorMessage = null;
 
         if(EventType.SUBSCRIPTION_ORDER.equals(event.getType())) {
-            errorMessage = String.format("Subscription with Creator UUID: %s already exists", event.getPayload().getCompany().getUuid());
-            uniqueIdValidator.validateEvent(event, Subscription.class, event.getPayload().getCompany().getUuid(), subscriptionDao, new EventValidationFailedException(errorMessage, Error.FORBIDDEN));
-        } else if (EventType.SUBSCRIPTION_CANCEL.equals(event.getType())) {
-            errorMessage = String.format("Subscription with Creator UUID: %s does not exists", event.getPayload().getAccount().getAccountIdentifier());
-            existsValidator.validateEvent(event, Subscription.class, event.getPayload().getAccount().getAccountIdentifier(), subscriptionDao, new EventValidationFailedException(errorMessage, Error.ACCOUNT_NOT_FOUND));
+            String uuid = event.getPayload().getCompany().getUuid();
+            errorMessage = String.format("Subscription with Creator UUID: %s already exists", uuid);
+            uniqueIdValidator.validateEvent(event, Subscription.class, uuid, subscriptionDao, new EventValidationFailedException(errorMessage, Error.FORBIDDEN));
+        } else if (EventType.SUBSCRIPTION_CANCEL.equals(event.getType()) || EventType.SUBSCRIPTION_CHANGE.equals(event.getType())) {
+            String uuid = event.getPayload().getAccount().getAccountIdentifier();
+            errorMessage = String.format("Subscription with Creator UUID: %s does not exists", uuid);
+            existsValidator.validateEvent(event, Subscription.class, uuid, subscriptionDao, new EventValidationFailedException(errorMessage, Error.ACCOUNT_NOT_FOUND));
         }
     }
 }

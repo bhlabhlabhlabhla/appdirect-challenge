@@ -6,6 +6,7 @@ import com.appdirect.app.dto.Event;
 import com.appdirect.app.dto.EventType;
 import com.appdirect.app.service.processor.EventProcessor;
 import com.appdirect.app.service.processor.SubscriptionCancelProcessor;
+import com.appdirect.app.service.processor.SubscriptionChangeProcessor;
 import com.appdirect.app.service.processor.SubscriptionCreateProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +27,13 @@ public class EventProcessingServiceImpl implements EventProcessingService {
 
     @Autowired
     protected SubscriptionCancelProcessor subscriptionCancelProcessor;
+
+    @Autowired
+    protected SubscriptionChangeProcessor subscriptionChangeProcessor;
+
     @Autowired
     protected SubscriptionDao subscriptionDao;
+
     @Autowired
     private ProtectedResourceDetails protectedResourceDetails;
 
@@ -52,7 +58,10 @@ public class EventProcessingServiceImpl implements EventProcessingService {
             return subscriptionCreateProcessor;
         else if(EventType.SUBSCRIPTION_CANCEL.equals(event.getType()))
             return subscriptionCancelProcessor;
+        else if(EventType.SUBSCRIPTION_CHANGE.equals(event.getType()))
+            return subscriptionChangeProcessor;
 
+        logger.error("Invalid type received. Cannot find appropriate implementation.");
         return null;
     }
 
