@@ -5,6 +5,7 @@ import com.appdirect.app.dto.AbstractNotificationResponse;
 import com.appdirect.app.dto.Event;
 import com.appdirect.app.dto.EventType;
 import com.appdirect.app.service.processor.EventProcessor;
+import com.appdirect.app.service.processor.SubscriptionCancelProcessor;
 import com.appdirect.app.service.processor.SubscriptionCreateProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +25,11 @@ public class EventProcessingServiceImpl implements EventProcessingService {
     protected SubscriptionCreateProcessor subscriptionCreateProcessor;
 
     @Autowired
-    private ProtectedResourceDetails protectedResourceDetails;
-
+    protected SubscriptionCancelProcessor subscriptionCancelProcessor;
     @Autowired
     protected SubscriptionDao subscriptionDao;
+    @Autowired
+    private ProtectedResourceDetails protectedResourceDetails;
 
     @Override
     public AbstractNotificationResponse processEvent(String eventUrl) {
@@ -48,6 +50,8 @@ public class EventProcessingServiceImpl implements EventProcessingService {
     private EventProcessor getEventProcessor(Event event) {
         if(EventType.SUBSCRIPTION_ORDER.equals(event.getType()))
             return subscriptionCreateProcessor;
+        else if(EventType.SUBSCRIPTION_CANCEL.equals(event.getType()))
+            return subscriptionCancelProcessor;
 
         return null;
     }

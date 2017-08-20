@@ -2,8 +2,11 @@ package com.appdirect.app.dto;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class AbstractUser {
 
     private String email;
