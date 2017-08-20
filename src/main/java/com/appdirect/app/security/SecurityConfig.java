@@ -33,6 +33,8 @@ import java.util.HashMap;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    protected org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SecurityConfig.class);
+
     @Value("${oauth.consumer.key}")
     private String consumerKey;
 
@@ -44,8 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.antMatcher("/api/**").csrf().disable()
             .exceptionHandling().authenticationEntryPoint(new UnauthorizedRequestExceptionHandler())
             .and()
-//            .authorizeRequests().anyRequest().permitAll()
-//            .and()
+            .authorizeRequests().anyRequest().permitAll()
+            .and()
             .addFilterBefore(oAuthProviderProcessingFilter(), ConcurrentSessionFilter.class);
     }
 
@@ -60,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 OAuthProcessingFilterEntryPoint authenticationEntryPoint = new OAuthProcessingFilterEntryPoint();
                 setAuthenticationEntryPoint(authenticationEntryPoint);
                 String realmName = request.getRequestURL().toString();
+                logger.info("RealmName: {}", realmName);
                 authenticationEntryPoint.setRealmName(realmName);
                 return true;
             }
