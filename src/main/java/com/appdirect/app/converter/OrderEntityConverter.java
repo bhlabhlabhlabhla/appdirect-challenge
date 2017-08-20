@@ -2,12 +2,13 @@ package com.appdirect.app.converter;
 
 
 
-import com.appdirect.app.domain.entity.Company;
 import com.appdirect.app.domain.entity.Order;
 import com.appdirect.app.domain.entity.OrderItem;
+import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
+@Service
 public class OrderEntityConverter implements EntityConverter<Order, com.appdirect.app.dto.Order> {
 
 

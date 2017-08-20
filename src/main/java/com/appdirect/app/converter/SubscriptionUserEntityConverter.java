@@ -1,13 +1,10 @@
 package com.appdirect.app.converter;
 
 
-
-import com.appdirect.app.domain.entity.Order;
-import com.appdirect.app.domain.entity.OrderItem;
 import com.appdirect.app.domain.entity.SubscriptionUser;
+import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
-
+@Service
 public class SubscriptionUserEntityConverter implements EntityConverter<SubscriptionUser, com.appdirect.app.dto.Creator> {
 
 

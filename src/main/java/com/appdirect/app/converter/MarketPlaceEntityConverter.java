@@ -3,9 +3,9 @@ package com.appdirect.app.converter;
 
 
 import com.appdirect.app.domain.entity.MarketPlace;
-import com.appdirect.app.domain.entity.Subscription;
-import com.appdirect.app.dto.Event;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MarketPlaceEntityConverter implements EntityConverter<MarketPlace, com.appdirect.app.dto.MarketPlace> {
 
 

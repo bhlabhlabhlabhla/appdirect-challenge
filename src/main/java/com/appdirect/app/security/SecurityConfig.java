@@ -51,7 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    //@Order(1)
     public OAuthProviderProcessingFilter oAuthProviderProcessingFilter() {
 
         final ProtectedResourceProcessingFilter filter = new ProtectedResourceProcessingFilter() {
@@ -61,7 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 OAuthProcessingFilterEntryPoint authenticationEntryPoint = new OAuthProcessingFilterEntryPoint();
                 setAuthenticationEntryPoint(authenticationEntryPoint);
                 String realmName = request.getRequestURL().toString();
-                logger.info("RealmName: {}", realmName);
                 authenticationEntryPoint.setRealmName(realmName);
                 return true;
             }

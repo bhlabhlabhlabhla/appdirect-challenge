@@ -1,11 +1,10 @@
-package com.ramdomfox.app;
+package com.appdirect.app;
 
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.appdirect.app.Application;
 import com.appdirect.app.dto.Event;
 import com.appdirect.app.service.processor.SubscriptionCreateProcessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;

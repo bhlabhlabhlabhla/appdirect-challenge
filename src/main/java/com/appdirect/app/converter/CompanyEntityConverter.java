@@ -3,7 +3,9 @@ package com.appdirect.app.converter;
 
 
 import com.appdirect.app.domain.entity.Company;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CompanyEntityConverter implements EntityConverter<Company, com.appdirect.app.dto.Company> {
 
 
