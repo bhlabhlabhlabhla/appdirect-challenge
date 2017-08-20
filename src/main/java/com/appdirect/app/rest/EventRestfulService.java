@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping(path = "/api/v1/integration/events")
+@RequestMapping(path = "/api/v1/integration/events/")
 public class EventRestfulService {
 
     protected Logger logger = LoggerFactory.getLogger(EventRestfulService.class);
@@ -26,7 +26,7 @@ public class EventRestfulService {
     protected EventProcessingService eventProcessingService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<AbstractNotificationResponse> processEvent(@RequestParam("event") String eventUrl) {
+    public ResponseEntity<AbstractNotificationResponse> processEvent(@RequestParam("eventUrl") String eventUrl) {
         logger.info("Notification Received: {}", eventUrl);
         AbstractNotificationResponse response = eventProcessingService.processEvent(eventUrl);
         logger.info("Notification Response: {}", response);

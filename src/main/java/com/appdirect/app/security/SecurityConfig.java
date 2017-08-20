@@ -102,7 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-            logger.debug("Request not authorized");
+            logger.info("Request not authorized");
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
         }
 
