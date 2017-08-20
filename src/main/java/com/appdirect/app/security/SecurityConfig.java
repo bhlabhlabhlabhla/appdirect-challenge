@@ -19,7 +19,6 @@ import org.springframework.security.oauth.provider.filter.OAuthProviderProcessin
 import org.springframework.security.oauth.provider.filter.ProtectedResourceProcessingFilter;
 import org.springframework.security.oauth.provider.token.InMemoryProviderTokenServices;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.session.ConcurrentSessionFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -41,12 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/api/v1/integration/events/**").csrf().disable()
+        http.antMatcher("/api/v1/integration/**").csrf().disable()
             .exceptionHandling().authenticationEntryPoint(new UnauthorizedRequestExceptionHandler())
             .and()
             .authorizeRequests().anyRequest().authenticated()
             .and()
-            .addFilterAfter(oAuthProviderProcessingFilter(), ConcurrentSessionFilter.class);
+            .addFilter(oAuthProviderProcessingFilter());
     }
 
     @Bean
