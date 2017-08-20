@@ -28,7 +28,7 @@ public class EventRestfulService {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<AbstractNotificationResponse> processEvent(@RequestParam("eventUrl") String eventUrl) {
         logger.info("Notification Received: {}", eventUrl);
-        
+
         AbstractNotificationResponse response = eventProcessingService.processEvent(eventUrl);
         logger.info("Notification Response: {}", response);
         return new ResponseEntity<>(response, HttpStatus.OK);
