@@ -16,7 +16,7 @@ public class SubscriptionEntityConverter implements EntityConverter<Subscription
     @Override
     public Subscription toEntity(Event dto) {
         Subscription entity = new Subscription();
-        entity.setAccountIdentifier(dto.getCreator().getUuid());
+        entity.setAccountIdentifier(dto.getPayload().getCompany().getUuid());
 
         // company
         entity.setCompanyCountry(dto.getPayload().getCompany().getCountry());

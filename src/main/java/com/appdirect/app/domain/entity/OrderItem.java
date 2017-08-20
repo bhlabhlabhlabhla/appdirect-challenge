@@ -50,7 +50,6 @@ public class OrderItem extends BaseEntity {
         return "OrderItem{" +
                 "quantity=" + quantity +
                 ", unit='" + unit + '\'' +
-                ", subscription=" + subscription +
                 '}';
     }
 }

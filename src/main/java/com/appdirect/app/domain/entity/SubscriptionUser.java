@@ -110,7 +110,6 @@ public class SubscriptionUser extends BaseEntity {
                 ", uuid='" + uuid + '\'' +
                 ", openId='" + openId + '\'' +
                 ", administrator=" + administrator +
-                ", subscription=" + subscription +
                 '}';
     }
 }

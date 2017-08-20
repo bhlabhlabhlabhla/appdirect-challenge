@@ -2,12 +2,15 @@ package com.appdirect.app;
 
 
 
+import com.appdirect.app.domain.repository.SubscriptionDao;
 import com.appdirect.app.dto.Event;
 import com.appdirect.app.service.processor.SubscriptionCreateProcessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,7 +22,10 @@ import java.io.IOException;
 public class SubscriptionCreateEventTest {
 
     @Autowired
+    protected SubscriptionDao subscriptionDao;
+    @Autowired
     protected SubscriptionCreateProcessor subscriptionCreateProcessor;
+    Logger logger = LoggerFactory.getLogger(SubscriptionCreateEventTest.class);
 
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -30,6 +36,14 @@ public class SubscriptionCreateEventTest {
     public void testSubscriptionCreateEvent() {
         Event mockEvent = createMockEvent();
         subscriptionCreateProcessor.processEvent(mockEvent);
+        printCurrentDbRecord();
+    }
+
+    private void printCurrentDbRecord() {
+        logger.info("____ Current Subscriptions ____");
+        subscriptionDao.findAll().forEach(subscription -> {
+            logger.info(subscription.toString());
+        });
     }
 
     private Event createMockEvent() {
