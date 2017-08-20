@@ -78,7 +78,6 @@ public class SubscriptionCreateProcessor implements EventProcessor {
         subscriptionUser.setAdministrator(true);
         subscriptionUserDao.save(subscriptionUser);
         logger.info("Administrator user with UUID: {} created for Company with UUId: {}", subscriptionUser.getUuid(), subscription.getCompany().getCompanyUuid());
-        printCurrentDbRecord();
         return new SuccessNotificationResponse(subscription.getAccountIdentifier(), String.valueOf(subscriptionUser.getId()));
     }
 
@@ -87,13 +86,6 @@ public class SubscriptionCreateProcessor implements EventProcessor {
         EventValidator validator = new UniqueIdValidator(subscriptionDao);
         String errorMessage = String.format("Subscription with Creator UUID: %s already exists", event.getCreator().getUuid());
         validator.validateEvent(event, Subscription.class, event.getCreator().getUuid(), new EventValidationFailedException(errorMessage, Error.FORBIDDEN));
-    }
-
-    void printCurrentDbRecord() {
-        logger.info("____ Current Subscriptions ____");
-        subscriptionDao.findAll().forEach(subscription -> {
-            logger.info(subscription.toString());
-        });
     }
 
 
