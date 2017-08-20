@@ -6,9 +6,11 @@ import com.appdirect.app.dto.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 
+@Service
 public class ExistsValidator implements EventValidator {
 
     protected Logger logger = LoggerFactory.getLogger(ExistsValidator.class);
