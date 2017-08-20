@@ -6,25 +6,21 @@ import com.appdirect.app.domain.entity.Subscription;
 import com.appdirect.app.domain.repository.SubscriptionDao;
 import com.appdirect.app.dto.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 
+@Service
 public class UniqueIdValidator implements EventValidator {
 
-    private JpaRepository jpaRepository;
-
-    public UniqueIdValidator(JpaRepository jpaRepository) {
-        this.jpaRepository = jpaRepository;
-    }
-
     @Override
-    public void validateEvent(Event event, Class aClass, Serializable id, RuntimeException exception) {
+    public void validateEvent(Event event, Class aClass, Serializable id, JpaRepository repository, RuntimeException exception) {
         if(Subscription.class.equals(aClass)) {
-            if(((SubscriptionDao) jpaRepository).findByAccountIdentifier((String) id) != null) {
+            if(((SubscriptionDao) repository).findByAccountIdentifier((String) id) != null) {
                 throw exception;
             }
         } else {
-            if(jpaRepository.findOne(id) != null) {
+            if(repository.findOne(id) != null) {
                 throw exception;
             }
         }

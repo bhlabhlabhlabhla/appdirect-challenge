@@ -2,8 +2,13 @@ package com.appdirect.app.service.processor;
 
 
 import com.appdirect.app.converter.EntityConverterService;
+import com.appdirect.app.domain.entity.Subscription;
+import com.appdirect.app.domain.entity.type.SubscriptionState;
+import com.appdirect.app.domain.repository.SubscriptionDao;
 import com.appdirect.app.dto.AbstractNotificationResponse;
 import com.appdirect.app.dto.Event;
+import com.appdirect.app.dto.SuccessNotificationResponse;
+import com.appdirect.app.validation.EventValidatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,10 @@ public class SubscriptionCancelProcessor implements EventProcessor {
 
     @Autowired
     protected EntityConverterService entityConverterService;
+    @Autowired
+    protected EventValidatorService eventValidatorService;
+    @Autowired
+    protected SubscriptionDao subscriptionDao;
 
 
     @Override
@@ -24,14 +33,14 @@ public class SubscriptionCancelProcessor implements EventProcessor {
     public AbstractNotificationResponse processEvent(Event event) {
         logger.info("Handling Subscription Cancel Event");
 
-        validate(event);
+        eventValidatorService.validate(event);
 
-        return null;
+        Subscription subscription = subscriptionDao.findByAccountIdentifier(event.getCreator().getUuid());
+        subscription.setState(SubscriptionState.CANCELLED);
+        subscriptionDao.save(subscription);
+        logger.info("Subscription with AccountIdentifier: {} is Cancelled", subscription.getAccountIdentifier());
+
+        return new SuccessNotificationResponse();
     }
 
-    private void validate(Event event) {
-//        EventValidator validator = new UniqueIdValidator(subscriptionDao);
-//        String errorMessage = String.format("Subscription with Creator UUID: %s already exists", event.getCreator().getUuid());
-//        validator.validateEvent(event, Subscription.class, event.getCreator().getUuid(), new EventValidationFailedException(errorMessage, com.appdirect.app.dto.Error.FORBIDDEN));
-    }
 }

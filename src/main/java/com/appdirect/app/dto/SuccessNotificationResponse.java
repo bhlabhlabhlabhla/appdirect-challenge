@@ -15,6 +15,10 @@ public class SuccessNotificationResponse extends AbstractNotificationResponse {
         this.userIdentifier = userIdentifier;
     }
 
+    public SuccessNotificationResponse() {
+        super(success);
+    }
+
     public String getAccountIdentifier() {
         return accountIdentifier;
     }

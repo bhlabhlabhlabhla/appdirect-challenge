@@ -9,6 +9,6 @@ import java.io.Serializable;
 
 public interface EventValidator<E extends Serializable, ID extends Serializable, R extends RuntimeException> {
 
-    void validateEvent(Event event, Class<E> tClazz, ID id, R r);
+    void validateEvent(Event event, Class<E> tClazz, ID id, JpaRepository jpaRepository, R r);
 
 }
