@@ -4,10 +4,7 @@ import com.appdirect.app.domain.repository.SubscriptionDao;
 import com.appdirect.app.dto.AbstractNotificationResponse;
 import com.appdirect.app.dto.Event;
 import com.appdirect.app.dto.EventType;
-import com.appdirect.app.service.processor.EventProcessor;
-import com.appdirect.app.service.processor.SubscriptionCancelProcessor;
-import com.appdirect.app.service.processor.SubscriptionChangeProcessor;
-import com.appdirect.app.service.processor.SubscriptionCreateProcessor;
+import com.appdirect.app.service.processor.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,9 @@ public class EventProcessingServiceImpl implements EventProcessingService {
 
     @Autowired
     protected SubscriptionChangeProcessor subscriptionChangeProcessor;
+
+    @Autowired
+    protected SubscriptionUserAssignmentProcessor subscriptionUserAssignmentProcessor;
 
     @Autowired
     protected SubscriptionDao subscriptionDao;
@@ -60,6 +60,8 @@ public class EventProcessingServiceImpl implements EventProcessingService {
             return subscriptionCancelProcessor;
         else if(EventType.SUBSCRIPTION_CHANGE.equals(event.getType()))
             return subscriptionChangeProcessor;
+        else if(EventType.USER_ASSIGNMENT.equals(event.getType()))
+            return subscriptionUserAssignmentProcessor;
 
         logger.error("Invalid type received. Cannot find appropriate implementation.");
         return null;
