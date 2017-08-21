@@ -20,7 +20,7 @@ public class UniqueIdValidator implements EventValidator {
             if(((SubscriptionDao) repository).findByAccountIdentifier((String) id) != null) {
                 throw exception;
             }
-        } if(SubscriptionUser.class.equals(aClass)) {
+        } else if(SubscriptionUser.class.equals(aClass)) {
             if(((SubscriptionUserDao) repository).findByUserUUID((String) id) != null) {
                 throw exception;
             }
