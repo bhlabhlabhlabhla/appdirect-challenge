@@ -2,6 +2,7 @@ package com.appdirect.app.converter;
 
 import com.appdirect.app.dto.Creator;
 import com.appdirect.app.dto.Event;
+import com.appdirect.app.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class EntityConverterService {
     public <E extends Serializable> void convert(E entity, Object dto) {
         if(dto instanceof Event)
             subscriptionEntityConverter.toEntity(entity, dto);
-        else if(dto instanceof Creator)
+        else if(dto instanceof Creator || dto instanceof User)
             subscriptionUserEntityConverter.toEntity(entity, dto);
 
     }
