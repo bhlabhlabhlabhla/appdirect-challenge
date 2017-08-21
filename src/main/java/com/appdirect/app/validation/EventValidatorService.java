@@ -51,11 +51,12 @@ public class EventValidatorService {
             existsValidator.validateEvent(event, Subscription.class, uuid, subscriptionDao, new EventValidationFailedException(errorMessage, Error.ACCOUNT_NOT_FOUND));
         } else if(EventType.USER_ASSIGNMENT.equals(event.getType())) {
             String uuid = event.getPayload().getAccount().getAccountIdentifier();
-            Subscription subscription = subscriptionDao.findByAccountIdentifier(uuid);
 
             //Check if Subscription exists
             errorMessage = String.format("Subscription with AccountIdentifier: %s does not exists", uuid);
             existsValidator.validateEvent(event, Subscription.class, uuid, subscriptionDao, new EventValidationFailedException(errorMessage, Error.ACCOUNT_NOT_FOUND));
+
+            Subscription subscription = subscriptionDao.findByAccountIdentifier(uuid);
 
             //Check if Max limit is reached
             errorMessage = String.format("Subscription Max Items limit reached. Cannot add more than {} items.", subscription.getMaxOrderItems());
@@ -65,6 +66,16 @@ public class EventValidatorService {
             errorMessage = String.format("User with UUID: %s already exists", uuid);
             uniqueIdValidator.validateEvent(event, SubscriptionUser.class, uuid, subscriptionUserDao, new EventValidationFailedException(errorMessage, Error.USER_ALREADY_EXISTS));
 
+        } else if(EventType.USER_UNASSIGNMENT.equals(event.getType())) {
+            String uuid = event.getPayload().getAccount().getAccountIdentifier();
+
+            //Check if Subscription exists
+            errorMessage = String.format("Subscription with AccountIdentifier: %s does not exists", uuid);
+            existsValidator.validateEvent(event, Subscription.class, uuid, subscriptionDao, new EventValidationFailedException(errorMessage, Error.ACCOUNT_NOT_FOUND));
+
+            uuid = event.getPayload().getUser().getUuid();
+            errorMessage = String.format("User with UUID: %s does not exists", uuid);
+            existsValidator.validateEvent(event, SubscriptionUser.class, uuid, subscriptionUserDao, new EventValidationFailedException(errorMessage, Error.USER_NOT_FOUND));
         }
     }
 }

@@ -32,6 +32,9 @@ public class EventProcessingServiceImpl implements EventProcessingService {
     protected SubscriptionUserAssignmentProcessor subscriptionUserAssignmentProcessor;
 
     @Autowired
+    protected SubscriptionUserUnAssignmentProcessor subscriptionUserUnAssignmentProcessor;
+
+    @Autowired
     protected SubscriptionDao subscriptionDao;
 
     @Autowired
@@ -62,6 +65,8 @@ public class EventProcessingServiceImpl implements EventProcessingService {
             return subscriptionChangeProcessor;
         else if(EventType.USER_ASSIGNMENT.equals(event.getType()))
             return subscriptionUserAssignmentProcessor;
+        else if(EventType.USER_UNASSIGNMENT.equals(event.getType()))
+            return subscriptionUserUnAssignmentProcessor;
 
         logger.error("Invalid type received. Cannot find appropriate implementation.");
         return null;
