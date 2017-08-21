@@ -14,9 +14,8 @@ public class SubscriptionEntityConverter implements EntityConverter<Subscription
 
 
     @Override
-    public Subscription toEntity(Event dto) {
-        Subscription entity = new Subscription();
-        if(dto == null) return null;
+    public void toEntity(Subscription entity, Event dto) {
+        if(dto == null) return;
 
         if(dto.getMarketPlace()!=null) {
             // marketPlate
@@ -54,6 +53,5 @@ public class SubscriptionEntityConverter implements EntityConverter<Subscription
 
         }
 
-        return entity;
     }
 }

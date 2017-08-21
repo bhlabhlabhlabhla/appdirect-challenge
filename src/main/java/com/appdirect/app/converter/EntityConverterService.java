@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
+
 @Service
 public class EntityConverterService {
 
@@ -21,12 +23,11 @@ public class EntityConverterService {
     @Qualifier("subscriptionUserEntityConverter")
     protected EntityConverter subscriptionUserEntityConverter;
 
-    public Object convert(Object dto) {
+    public <E extends Serializable> void convert(E entity, Object dto) {
         if(dto instanceof Event)
-            return subscriptionEntityConverter.toEntity(dto);
+            subscriptionEntityConverter.toEntity(entity, dto);
         else if(dto instanceof Creator)
-            return subscriptionUserEntityConverter.toEntity(dto);
-        else
-            return null;
+            subscriptionUserEntityConverter.toEntity(entity, dto);
+
     }
 }

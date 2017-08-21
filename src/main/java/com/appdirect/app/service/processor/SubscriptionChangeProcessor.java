@@ -38,7 +38,8 @@ public class SubscriptionChangeProcessor implements EventProcessor {
         // validations
         eventValidatorService.validate(event);
 
-        Subscription subscription = (Subscription) entityConverterService.convert(event);
+        Subscription subscription = subscriptionDao.findByAccountIdentifier(event.getPayload().getAccount().getAccountIdentifier());
+        entityConverterService.convert(subscription, event);
         subscription.setState(SubscriptionState.ACTIVE);
         subscriptionDao.save(subscription);
         logger.info("Subscription updated for Creator UUID: {} with Subscription Id: {}", subscription.getAccountIdentifier(), subscription.getId());

@@ -9,9 +9,8 @@ public class SubscriptionUserEntityConverter implements EntityConverter<Subscrip
 
 
     @Override
-    public SubscriptionUser toEntity(com.appdirect.app.dto.Creator dto) {
-        if(dto == null) return null;
-        SubscriptionUser entity = new SubscriptionUser();
+    public void toEntity(SubscriptionUser entity, com.appdirect.app.dto.Creator dto) {
+        if(dto == null) return;
         entity.setEmail(dto.getEmail());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
@@ -19,6 +18,5 @@ public class SubscriptionUserEntityConverter implements EntityConverter<Subscrip
         entity.setLanguage(dto.getLanguage());
         entity.setOpenId(dto.getOpenId());
         entity.setUuid(dto.getUuid());
-        return entity;
     }
 }

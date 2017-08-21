@@ -39,12 +39,14 @@ public class SubscriptionCreateProcessor implements EventProcessor {
         // validations
         eventValidatorService.validate(event);
 
-        Subscription subscription = (Subscription) entityConverterService.convert(event);
+        Subscription subscription = new Subscription();
+        entityConverterService.convert(subscription, event);
         subscription.setState(SubscriptionState.ACTIVE);
         subscriptionDao.save(subscription);
         logger.info("Subscription created for Creator UUID: {} with Subscription Id: {}", subscription.getAccountIdentifier(), subscription.getId());
 
-        SubscriptionUser subscriptionUser = (SubscriptionUser) entityConverterService.convert(event.getCreator());
+        SubscriptionUser subscriptionUser = new SubscriptionUser();
+        entityConverterService.convert(subscriptionUser, event.getCreator());
         subscriptionUser.setSubscription(subscription);
         subscriptionUser.setAdministrator(true);
         subscriptionUserDao.save(subscriptionUser);
