@@ -2,6 +2,8 @@ package com.appdirect.app.domain.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -28,6 +30,7 @@ public class SubscriptionUser extends BaseEntity {
     @Column
     private Boolean administrator = false;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Subscription subscription;

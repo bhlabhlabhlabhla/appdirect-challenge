@@ -33,6 +33,7 @@ public class SubscriptionUserAssignmentProcessor implements EventProcessor {
 
     @Override
     public AbstractNotificationResponse processEvent(Event event) {
+        logger.info("Handling User Assignment Event");
 
         eventValidatorService.validate(event);
 

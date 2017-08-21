@@ -32,6 +32,7 @@ public class SubscriptionUserUnAssignmentProcessor implements EventProcessor {
 
     @Override
     public AbstractNotificationResponse processEvent(Event event) {
+        logger.info("Handling User UnAssignment Event");
 
         eventValidatorService.validate(event);
 

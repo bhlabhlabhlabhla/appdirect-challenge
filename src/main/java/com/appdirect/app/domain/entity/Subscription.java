@@ -3,6 +3,7 @@ package com.appdirect.app.domain.entity;
 
 
 import com.appdirect.app.domain.entity.type.SubscriptionState;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -51,6 +52,7 @@ public class Subscription extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SubscriptionState state;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "subscription")
     private Set<SubscriptionUser> subscriptionUsers = new HashSet<>();
 
