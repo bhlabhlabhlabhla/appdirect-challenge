@@ -37,7 +37,7 @@ public class SubscriptionCancelProcessor implements EventProcessor {
 
         Subscription subscription = subscriptionDao.findByAccountIdentifier(event.getPayload().getAccount().getAccountIdentifier());
         subscription.setState(SubscriptionState.CANCELLED);
-        subscriptionDao.save(subscription);
+        subscriptionDao.delete(subscription);
         logger.info("Subscription with AccountIdentifier: {} is Cancelled", subscription.getAccountIdentifier());
 
         return new SuccessNotificationResponse();
