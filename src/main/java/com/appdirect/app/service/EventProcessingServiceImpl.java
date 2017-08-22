@@ -1,9 +1,7 @@
 package com.appdirect.app.service;
 
 import com.appdirect.app.domain.repository.SubscriptionDao;
-import com.appdirect.app.dto.AbstractNotificationResponse;
-import com.appdirect.app.dto.Event;
-import com.appdirect.app.dto.EventType;
+import com.appdirect.app.dto.*;
 import com.appdirect.app.service.processor.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +33,9 @@ public class EventProcessingServiceImpl implements EventProcessingService {
     protected SubscriptionUserUnAssignmentProcessor subscriptionUserUnAssignmentProcessor;
 
     @Autowired
+    protected SubscriptionNoticeProcessor subscriptionNoticeProcessor;
+
+    @Autowired
     protected SubscriptionDao subscriptionDao;
 
     @Autowired
@@ -45,6 +46,10 @@ public class EventProcessingServiceImpl implements EventProcessingService {
         Event event = fetchEvent(eventUrl); // fetch
         if(event == null) throw new IllegalArgumentException("Event cannot be empty");
         logger.info("Fetched Event: {}", event);
+
+        // for ping tests
+        if(Flag.STATELESS.equals(event.getFlag())) return new SuccessNotificationResponse();
+
         AbstractNotificationResponse response = getEventProcessor(event).processEvent(event);
         printCurrentDbRecord();
         return response;
@@ -67,6 +72,8 @@ public class EventProcessingServiceImpl implements EventProcessingService {
             return subscriptionUserAssignmentProcessor;
         else if(EventType.USER_UNASSIGNMENT.equals(event.getType()))
             return subscriptionUserUnAssignmentProcessor;
+        else if(EventType.SUBSCRIPTION_NOTICE.equals(event.getType()))
+            return subscriptionNoticeProcessor;
 
         logger.error("Invalid type received. Cannot find appropriate implementation.");
         return null;

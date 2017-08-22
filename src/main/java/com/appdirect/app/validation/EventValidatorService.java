@@ -76,6 +76,11 @@ public class EventValidatorService {
             uuid = event.getPayload().getUser().getUuid();
             errorMessage = String.format("User with UUID: %s does not exists", uuid);
             existsValidator.validateEvent(event, SubscriptionUser.class, uuid, subscriptionUserDao, new EventValidationFailedException(errorMessage, Error.USER_NOT_FOUND));
+        } else if(EventType.SUBSCRIPTION_NOTICE.equals(event.getType())) {
+            String uuid = event.getPayload().getAccount().getAccountIdentifier();
+            errorMessage = String.format("Subscription with AccountIdentifier: %s does not exists", uuid);
+            existsValidator.validateEvent(event, Subscription.class, uuid, subscriptionDao, new EventValidationFailedException(errorMessage, Error.ACCOUNT_NOT_FOUND));
+
         }
     }
 }

@@ -187,7 +187,7 @@ public class Subscription extends BaseEntity {
                 ", editionCode='" + editionCode + '\'' +
                 ", pricingDuration='" + pricingDuration + '\'' +
                 ", maxOrderItems=" + maxOrderItems +
-                ", items=" + items +
+                ", items=" + (items!=null && items.size()>0 ? new ArrayList<>(items).stream().map(OrderItem::toString) : "") +
                 ", state=" + state +
                 ", subscriptionUsers=" + subscriptionUsers +
                 '}';
