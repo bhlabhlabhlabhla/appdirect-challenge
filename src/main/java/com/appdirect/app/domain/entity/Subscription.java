@@ -43,6 +43,7 @@ public class Subscription extends BaseEntity {
     @Column
     private Long maxOrderItems;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = false, mappedBy = "subscription")
     private Set<OrderItem> items;
 

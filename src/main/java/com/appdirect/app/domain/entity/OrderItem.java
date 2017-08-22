@@ -1,6 +1,8 @@
 package com.appdirect.app.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class OrderItem extends BaseEntity {
     @Column
     private String unit;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Subscription subscription;
