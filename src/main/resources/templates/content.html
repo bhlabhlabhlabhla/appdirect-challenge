@@ -24,25 +24,30 @@
                     content += '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
                     for(idx in result.subscriptionUsers) {
                         var u  = result.subscriptionUsers[idx];
-                        content += '<tr>';
-                        content += '<td>Id</td>';
-                        content += '<td>'+u.id+'</td>';
-                        content += '</tr>';
-                        content += '<tr>';
-                        content += '<td>Name</td>';
-                        content += '<td>'+u.firstName+' '+u.lastName+'</td>';
-                        content += '</tr>';
+                        content += formatRow('Id:', u.id);
+                        content += formatRow('Name:', u.firstName+' '+u.lastName);
+                        content += formatRow('Email:', u.email);
+                        content += formatRow('OpenId:', u.openId);
+                        content += formatRow('Administrator:', u.administrator);
                     }
                     content += '</table>';
 
                     $('#subUserDiv').html(content);
                 });
             }
+            function formatRow(label, value) {
+                var row = '';
+                row += '<tr>';
+                row += '<td>'+label+'</td>';
+                row += '<td>'+(value == null ? '' : value)+'</td>';
+                row += '</tr>';
+                return row;
+            }
             $(document).ready(function () {
                 var table = $('#subscriptionsTable').DataTable({
                     "sAjaxSource": "/subscriptions",
                     "sAjaxDataProp": "",
-                    "order": [[0, "asc"]],
+                    "order": [[1, "asc"]],
                     "aoColumns": [
                         {
                             "className":      'details-control',
@@ -52,7 +57,11 @@
                         },
                         {"mData": "id"},
                         {"mData": "accountIdentifier"},
-                        {"mData": "companyName"}
+                        {"mData": "adminUser"},
+                        {"mData": "companyName"},
+                        {"mData": "editionCode"},
+                        {"mData": "state"},
+                        {"mData": "maxOrderItems"}
                     ]
                 });
 
@@ -77,9 +86,9 @@
     <body>
         <section layout:fragment="content">
             <div class="panel panel-default">
-                <div class="panel-heading">Subscriptions</div>
+                <div class="panel-heading"><strong>Subscriptions</strong></div>
                 <div class="panel-body">
-                    <p>List of subscriptions</p>
+                    <p>Following table lists all the subscriptions and to see assigned user please click on '+' icon on respective row.</p>
                 </div>
                 <table id="subscriptionsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
                     <thead>
@@ -87,7 +96,11 @@
                             <th></th>
                             <th>Id</th>
                             <th>Account Identifier</th>
-                            <th>Company Name</th>
+                            <th>Administrator</th>
+                            <th>Company</th>
+                            <th>Edition</th>
+                            <th>State</th>
+                            <th>Max Users</th>
                         </tr>
                     </thead>
                 </table>

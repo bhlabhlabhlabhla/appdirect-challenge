@@ -1,13 +1,11 @@
 package com.appdirect.app.domain.entity;
 
 
-
 import com.appdirect.app.domain.entity.type.SubscriptionState;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Subscription extends BaseEntity {
@@ -55,6 +53,9 @@ public class Subscription extends BaseEntity {
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "subscription")
     private Set<SubscriptionUser> subscriptionUsers = new HashSet<>();
+
+    @Transient
+    private String adminUser;
 
     public Subscription() {
     }
@@ -189,5 +190,20 @@ public class Subscription extends BaseEntity {
                 ", state=" + state +
                 ", subscriptionUsers=" + subscriptionUsers +
                 '}';
+    }
+
+    public String getAdminUser() {
+        if(getSubscriptionUsers()!=null && getSubscriptionUsers().size()>0) {
+           List<SubscriptionUser> subscriptionUserList = new ArrayList<>(subscriptionUsers);
+           Optional<SubscriptionUser> adminUser =  subscriptionUserList.stream().filter(SubscriptionUser::getAdministrator).findAny();
+           if(adminUser.isPresent())
+               return String.format("%s %s", adminUser.get().getFirstName(), adminUser.get().getLastName());
+            else return "";
+        }
+        return "";
+    }
+
+    public void setAdminUser(String adminUser) {
+        this.adminUser = adminUser;
     }
 }
