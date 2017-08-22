@@ -85,7 +85,7 @@ public class EventProcessingServiceImpl implements EventProcessingService {
             return subscriptionUserUpdateProcessor;
 
         logger.error("Invalid type received. Cannot find appropriate implementation.");
-        return null;
+        throw new UnsupportedOperationException();
     }
 
 }

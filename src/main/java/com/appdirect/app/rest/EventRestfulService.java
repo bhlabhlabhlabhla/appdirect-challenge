@@ -4,6 +4,7 @@ package com.appdirect.app.rest;
 import com.appdirect.app.dto.AbstractNotificationResponse;
 import com.appdirect.app.dto.Error;
 import com.appdirect.app.dto.ErrorNotificationResponse;
+import com.appdirect.app.exception.EventValidationFailedException;
 import com.appdirect.app.service.EventProcessingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,12 @@ public class EventRestfulService {
         AbstractNotificationResponse response = null;
         try {
             response = eventProcessingService.processEvent(eventUrl);
+        } catch (EventValidationFailedException e) {
+          logger.error("Validation failed while processing event", e);
+          response = e.getErrorNotificationResponse();
+        } catch (UnsupportedOperationException e) {
+            logger.error("Unable to process received event", e);
+            response = new ErrorNotificationResponse(Error.CONFIGURATION_ERROR);
         } catch (Exception e) {
             logger.error("Unable to process received event", e);
             response = new ErrorNotificationResponse(Error.UNKNOWN_ERROR);
