@@ -20,7 +20,7 @@
             function format ( data ) {
                 var id = data.id;
                 var content = '';
-                $.get("https://appdirect-chanllenge.herokuapp.com/subscriptions/"+id, function(result) {
+                $.get("https://appdirect-js-challenge.herokuapp.com/subscriptions/"+id, function(result) {
                     content += '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
                     for(idx in result.subscriptionUsers) {
                         var u  = result.subscriptionUsers[idx];
