@@ -1,8 +1,9 @@
 package com.appdirect.app.rest;
 
 
-
 import com.appdirect.app.dto.AbstractNotificationResponse;
+import com.appdirect.app.dto.Error;
+import com.appdirect.app.dto.ErrorNotificationResponse;
 import com.appdirect.app.service.EventProcessingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +28,14 @@ public class EventRestfulService {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<AbstractNotificationResponse> processEvent(@RequestParam("eventUrl") String eventUrl) {
-        logger.info("Notification Received: {}", eventUrl);
-        AbstractNotificationResponse response = eventProcessingService.processEvent(eventUrl);
-        logger.info("Notification Response: {}", response);
+        AbstractNotificationResponse response = null;
+        try {
+            response = eventProcessingService.processEvent(eventUrl);
+        } catch (Exception e) {
+            logger.error("Unable to process received event", e);
+            response = new ErrorNotificationResponse(Error.UNKNOWN_ERROR);
+        }
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

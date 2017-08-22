@@ -36,6 +36,9 @@ public class EventProcessingServiceImpl implements EventProcessingService {
     protected SubscriptionNoticeProcessor subscriptionNoticeProcessor;
 
     @Autowired
+    protected SubscriptionUserUpdateProcessor subscriptionUserUpdateProcessor;
+
+    @Autowired
     protected SubscriptionDao subscriptionDao;
 
     @Autowired
@@ -43,6 +46,8 @@ public class EventProcessingServiceImpl implements EventProcessingService {
 
     @Override
     public AbstractNotificationResponse processEvent(String eventUrl) {
+        logger.info("Notification Received: {}", eventUrl);
+
         Event event = fetchEvent(eventUrl); // fetch
         if(event == null) throw new IllegalArgumentException("Event cannot be empty");
         logger.info("Fetched Event: {}", event);
@@ -51,7 +56,9 @@ public class EventProcessingServiceImpl implements EventProcessingService {
         if(Flag.STATELESS.equals(event.getFlag())) return new SuccessNotificationResponse();
 
         AbstractNotificationResponse response = getEventProcessor(event).processEvent(event);
-        printCurrentDbRecord();
+
+        logger.info("Notification Response: {}", response);
+
         return response;
     }
 
@@ -74,15 +81,11 @@ public class EventProcessingServiceImpl implements EventProcessingService {
             return subscriptionUserUnAssignmentProcessor;
         else if(EventType.SUBSCRIPTION_NOTICE.equals(event.getType()))
             return subscriptionNoticeProcessor;
+        else if(EventType.USER_UPDATED.equals(event.getType()))
+            return subscriptionUserUpdateProcessor;
 
         logger.error("Invalid type received. Cannot find appropriate implementation.");
         return null;
     }
 
-    private void printCurrentDbRecord() {
-        logger.info("____ Current Subscriptions ____");
-        subscriptionDao.findAll().forEach(subscription -> {
-            logger.info(subscription.toString());
-        });
-    }
 }

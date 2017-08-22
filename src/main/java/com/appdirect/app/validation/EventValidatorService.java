@@ -66,7 +66,7 @@ public class EventValidatorService {
             errorMessage = String.format("User with UUID: %s already exists", uuid);
             uniqueIdValidator.validateEvent(event, SubscriptionUser.class, uuid, subscriptionUserDao, new EventValidationFailedException(errorMessage, Error.USER_ALREADY_EXISTS));
 
-        } else if(EventType.USER_UNASSIGNMENT.equals(event.getType())) {
+        } else if(EventType.USER_UNASSIGNMENT.equals(event.getType()) || EventType.USER_UPDATED.equals(event.getType())) {
             String uuid = event.getPayload().getAccount().getAccountIdentifier();
 
             //Check if Subscription exists
