@@ -39,7 +39,7 @@ public class SubscriptionEntityConverter implements EntityConverter<Subscription
             if(dto.getPayload().getOrder()!=null) {
                 //order
                 entity.setEditionCode(dto.getPayload().getOrder().getEditionCode());
-                entity.setMaxOrderItems(dto.getPayload().getOrder().getItems()!=null?
+                entity.setMaxOrderItems(dto.getPayload().getOrder().getItems()!=null && dto.getPayload().getOrder().getItems().size()>0?
                         dto.getPayload().getOrder().getItems().get(0).getQuantity():0);
                 entity.setPricingDuration(dto.getPayload().getOrder().getPricingDuration());
                 entity.setItems(dto.getPayload().getOrder().getItems().stream().map(item -> {
