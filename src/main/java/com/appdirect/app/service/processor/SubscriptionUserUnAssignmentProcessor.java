@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This Implementation handles UnAssignment of User to a Subscription into database.
@@ -41,6 +42,7 @@ public class SubscriptionUserUnAssignmentProcessor implements EventProcessor {
     protected SubscriptionDao subscriptionDao;
 
     @Override
+    @Transactional
     public AbstractNotificationResponse processEvent(Event event) {
         logger.info("Handling User UnAssignment Event");
 

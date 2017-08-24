@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This Implementation handles Updates of SubscriptionUser into database.
@@ -37,6 +38,7 @@ public class SubscriptionUserUpdateProcessor implements EventProcessor {
     protected EntityConverterService entityConverterService;
 
     @Override
+    @Transactional
     public AbstractNotificationResponse processEvent(Event event) {
 
         logger.info("Handling Subscription User Update Event");
