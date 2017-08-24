@@ -44,7 +44,7 @@ public class Subscription extends BaseEntity {
     private Long maxOrderItems;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = false, mappedBy = "subscription")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "subscription")
     private Set<OrderItem> items;
 
     @Column
@@ -52,7 +52,7 @@ public class Subscription extends BaseEntity {
     private SubscriptionState state;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = false, mappedBy = "subscription")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "subscription")
     private Set<SubscriptionUser> subscriptionUsers = new HashSet<>();
 
     @Transient
