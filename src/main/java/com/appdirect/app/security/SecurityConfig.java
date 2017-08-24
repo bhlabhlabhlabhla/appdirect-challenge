@@ -66,8 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/**").permitAll().anyRequest().anonymous();
 
         http.antMatcher("/api/v1/integration/**")
-            //.exceptionHandling().authenticationEntryPoint(new UnauthorizedRequestExceptionHandler())
-            //.and()
+            .exceptionHandling().authenticationEntryPoint(new UnauthorizedRequestExceptionHandler())
+            .and()
             .authorizeRequests().anyRequest().permitAll()
             .and()
             .addFilterBefore(oAuthProviderProcessingFilter(), ConcurrentSessionFilter.class);
@@ -93,7 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
         filter.setConsumerDetailsService(consumerDetailsService());
-        filter.setTokenServices(new InMemoryProviderTokenServices());
+        filter.setTokenServices(inMemoryProviderTokenServices());
 
         return filter;
     }
