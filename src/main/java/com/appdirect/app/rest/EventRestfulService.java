@@ -57,6 +57,7 @@ public class EventRestfulService {
             response = new ErrorNotificationResponse(Error.UNKNOWN_ERROR);
         }
 
+        logger.info("Response: {}", response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
