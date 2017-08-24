@@ -52,7 +52,7 @@ public class Subscription extends BaseEntity {
     private SubscriptionState state;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "subscription")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = false, mappedBy = "subscription")
     private Set<SubscriptionUser> subscriptionUsers = new HashSet<>();
 
     @Transient

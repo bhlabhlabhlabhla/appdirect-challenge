@@ -46,7 +46,7 @@ public class SubscriptionUserUnAssignmentProcessor implements EventProcessor {
     public AbstractNotificationResponse processEvent(Event event) {
         logger.info("Handling User UnAssignment Event");
 
-        // eventValidatorService.validate(event);
+        eventValidatorService.validate(event);
 
         String userUUID = event.getPayload().getUser().getUuid();
         String accountIdentifier = event.getPayload().getAccount().getAccountIdentifier();
