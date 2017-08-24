@@ -96,18 +96,25 @@ public class EventProcessingServiceImpl implements EventProcessingService {
      * @return EventProcessor Implementation
      */
     private EventProcessor getEventProcessor(Event event) {
+
         if(EventType.SUBSCRIPTION_ORDER.equals(event.getType()))
             return subscriptionCreateProcessor;
+
         else if(EventType.SUBSCRIPTION_CANCEL.equals(event.getType()))
             return subscriptionCancelProcessor;
+
         else if(EventType.SUBSCRIPTION_CHANGE.equals(event.getType()))
             return subscriptionChangeProcessor;
+
         else if(EventType.USER_ASSIGNMENT.equals(event.getType()))
             return subscriptionUserAssignmentProcessor;
+
         else if(EventType.USER_UNASSIGNMENT.equals(event.getType()))
             return subscriptionUserUnAssignmentProcessor;
+
         else if(EventType.SUBSCRIPTION_NOTICE.equals(event.getType()))
             return subscriptionNoticeProcessor;
+
         else if(EventType.USER_UPDATED.equals(event.getType()))
             return subscriptionUserUpdateProcessor;
 

@@ -52,6 +52,7 @@ public class SubscriptionUserUnAssignmentProcessor implements EventProcessor {
         String accountIdentifier = event.getPayload().getAccount().getAccountIdentifier();
 
         SubscriptionUser subscriptionUser = subscriptionUserDao.findByUserUUIDAndSubscriptionAccountIdentifier(userUUID, accountIdentifier);
+        logger.info("Deleting Subscription User with Id: {}", subscriptionUser.getId());
         subscriptionUserDao.delete(subscriptionUser);
 
         logger.info("UnAssigned User with UUID: {} to subscription with AccountIdentifier: {}", userUUID, accountIdentifier);
