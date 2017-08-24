@@ -53,8 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * All requests are defaulted to anonymous Authorization
      * On Path '/api/v1/integration/**' we added following:
-     *      > Custom Filter to handle oAuth Signature verification on incoming requests.
-     *      > Authorizes all requests on this URL without authentication.
+     *      - Custom Filter to handle oAuth Signature verification on incoming requests.
+     *      - Authorizes all requests on this URL without authentication.
      *
      * @param http HTTP SecurityBuilder object fed by Spring
      * @throws Exception Exception thrown in case something bad happens

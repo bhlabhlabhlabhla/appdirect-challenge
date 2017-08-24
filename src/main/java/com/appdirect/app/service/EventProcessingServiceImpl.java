@@ -51,9 +51,9 @@ public class EventProcessingServiceImpl implements EventProcessingService {
     /**
      * This method does the following:
      *
-     *      > Event will be fetched using {@see org.springframework.security.oauth.consumer.client.OAuthRestTemplate}
-     *      >If event is Stateless we return back dummy success response because it will come only from Ping Test
-     *      >If event is not Stateless then we send event for processing into service layer and return resulting response
+     *      - Event will be fetched using @see org.springframework.security.oauth.consumer.client.OAuthRestTemplate
+     *      - If event is Stateless we return back dummy success response because it will come only from Ping Test
+     *      - If event is not Stateless then we send event for processing into service layer and return resulting response
      *
      * @param eventUrl URL where event payload needs to be fetched
      * @return Success or Failure response

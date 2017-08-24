@@ -15,10 +15,10 @@ import java.io.Serializable;
 /**
  * This implementation validates the existence of provided Entity type with ID field.
  *
- * Special handling for Subscription &  SubscriptionUser Entity:
+ * Special handling for Subscription and SubscriptionUser Entity:
  *
- *      > We validate Subscription with AccountIdentifier field.
- *      > We validate SubscriptionUser with UUID field.
+ *      - We validate Subscription with AccountIdentifier field.
+ *      - We validate SubscriptionUser with UUID field.
  *
  * If validation fails the method throws provided RuntimeException
  */

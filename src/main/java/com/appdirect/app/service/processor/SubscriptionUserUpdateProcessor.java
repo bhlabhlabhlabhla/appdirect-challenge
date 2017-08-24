@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * This Implementation handles Updates of SubscriptionUser into database.
  * Here main validations are:
- *      > Check if assigned user exists or not. If it does then return Failure response with Not Found error message.
+ *      - Check if assigned user exists or not. If it does then return Failure response with Not Found error message.
  *
  * Logic: We find the Subscription User related to Subscription based on provided Event data and we modify it as per received
  *  event and persists into our database.

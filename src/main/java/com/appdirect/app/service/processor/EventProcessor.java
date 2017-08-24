@@ -8,9 +8,9 @@ import com.appdirect.app.dto.Event;
 /**
  * Event Processor Interface which dictates the contract of event processing.
  * All Implementation follows following Flow:
- *      > Execution of validations
- *      > Conversion from DTO to Entity objects
- *      > Persisting of entity object into database.
+ *      - Execution of validations
+ *      - Conversion from DTO to Entity objects
+ *      - Persisting of entity object into database.
 
  */
 public interface EventProcessor {

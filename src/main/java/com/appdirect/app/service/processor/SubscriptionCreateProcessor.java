@@ -20,13 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * This Implementation handles Creation of Subscription into database.
  * Here main validations are:
- *      > Check if subscription already exists. If it does then return Failure response with Already Exists error message.
+ *      - Check if subscription already exists. If it does then return Failure response with Already Exists error message.
  *
  * Logic: We persist the received event from AppDirect.
  *
  * On Success it returns following attributes:
- *      > Account Identifier we received from AppDirect.
- *      > ID of subscription we created in our database.
+ *      - Account Identifier we received from AppDirect.
+ *      - ID of subscription we created in our database.
  */
 @Service
 public class SubscriptionCreateProcessor implements EventProcessor {

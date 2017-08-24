@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * This Implementation handles any Change of Subscription into database.
  * Here main validations are:
- *      > Check if subscription exists or not. If it does then return Failure response with Not Found error message.
+ *      - Check if subscription exists or not. If it does then return Failure response with Not Found error message.
  *
  * Logic: We find subscription with provided event data and we modify it based on what we received new.
  *

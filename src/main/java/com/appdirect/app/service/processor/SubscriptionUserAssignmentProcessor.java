@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * This Implementation handles Assignment of User to a Subscription into database.
  * Here main validations are:
- *      > Check if subscription exists or not. If it does then return Failure response with Not Found error message.
- *      > Check if assigned user already exists or not. If it does then return Failure response with Already Exists error message
+ *      - Check if subscription exists or not. If it does then return Failure response with Not Found error message.
+ *      - Check if assigned user already exists or not. If it does then return Failure response with Already Exists error message
  *
  * Logic: We find the subscription based on event data and we create a Subscription user and persist it.
  *

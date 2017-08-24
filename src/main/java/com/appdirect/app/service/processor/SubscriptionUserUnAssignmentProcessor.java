@@ -17,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * This Implementation handles UnAssignment of User to a Subscription into database.
  * Here main validations are:
- *      > Check if subscription exists or not. If it does then return Failure response with Not Found error message.
- *      > Check if assigned user exists or not. If it does then return Failure response with Not Found error message.
+ *      - Check if subscription exists or not. If it does then return Failure response with Not Found error message.
+ *      - Check if assigned user exists or not. If it does then return Failure response with Not Found error message.
  *
  * Logic: We find the Subscription User related to Subscription based on provided Event data and we delete it from our database.
  *
