@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 
+/**
+ * This implementation validates if the UsersLimit has been reached or not during user assignment event.
+ *
+ * We check the max limit on Subscription and compare with items being added. If exceeds then we throw provided RuntimeException
+ *
+ */
 @Service
 public class UserLimitValidator implements EventValidator {
 

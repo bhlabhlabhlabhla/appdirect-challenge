@@ -10,6 +10,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * This Implementation handles Notice alerts of Subscription into database.
+ * Here main validations are:
+ *      > Check if subscription exists or not. If it does then return Failure response with Not Found error message.
+ *
+ * Logic: We find the subscription based on event data and we change the SubscriptionState field on Subscription.
+ *        If delivered notice was of type 'Closed' then we delete it from our database.
+ *
+ * On Success it returns empty Success response.
+ */
 @Service
 public class SubscriptionNoticeProcessor implements EventProcessor {
 

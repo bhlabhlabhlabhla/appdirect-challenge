@@ -14,6 +14,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * This Implementation handles Assignment of User to a Subscription into database.
+ * Here main validations are:
+ *      > Check if subscription exists or not. If it does then return Failure response with Not Found error message.
+ *      > Check if assigned user already exists or not. If it does then return Failure response with Already Exists error message
+ *
+ * Logic: We find the subscription based on event data and we create a Subscription user and persist it.
+ *
+ * On Success it returns empty Success response.
+ */
 @Service
 public class SubscriptionUserAssignmentProcessor implements EventProcessor {
 

@@ -20,27 +20,40 @@
             function format ( data ) {
                 var id = data.id;
                 var content = '';
-                $.get("https://appdirect-js-challenge.herokuapp.com/subscriptions/"+id, function(result) {
-                    content += '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+                $.get(window.location.href+"/subscriptions/"+id, function(result) {
+                    content += '<div><h4>Assigned Users</h4></div>';
+                    content += '<table cellpadding="5" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" border="0" style="padding-left:50px;">';
                     for(idx in result.subscriptionUsers) {
                         var u  = result.subscriptionUsers[idx];
+                        content += '<thead>';
+                        content += '    <tr>';
+                        content += '        <th>Id</th>';
+                        content += '        <th>Name</th>';
+                        content += '        <th>Email</th>';
+                        content += '        <th>OpenId</th>';
+                        content += '        <th>Is Administrator?</th>';
+                        content += '    </tr>';
+                        content += '</thead>';
+
+                        content += '<tbody>';
+                        content += '    <tr>';
                         content += formatRow('Id:', u.id);
                         content += formatRow('Name:', u.firstName+' '+u.lastName);
                         content += formatRow('Email:', u.email);
                         content += formatRow('OpenId:', u.openId);
                         content += formatRow('Administrator:', u.administrator);
+                        content += '    </tr>';
+                        content += '</tbody>';
                     }
                     content += '</table>';
 
                     $('#subUserDiv').html(content);
                 });
             }
+
             function formatRow(label, value) {
                 var row = '';
-                row += '<tr>';
-                row += '<td>'+label+'</td>';
                 row += '<td>'+(value == null ? '' : value)+'</td>';
-                row += '</tr>';
                 return row;
             }
             $(document).ready(function () {
@@ -87,8 +100,8 @@
         <section layout:fragment="content">
             <div class="panel panel-default">
                 <div class="panel-heading"><strong>Subscriptions</strong></div>
-                <div class="panel-body">
-                    <p>Following table lists all the subscriptions and to see assigned user please click on '+' icon on respective row.</p>
+                <div class="panel-body" style="margin-bottom: 20px;">
+                    <p>Following table lists all the subscriptions registered through AppDirect MarketPlace. To see assigned users please click on '+' icon on respective row.</p>
                 </div>
                 <table id="subscriptionsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
                     <thead>

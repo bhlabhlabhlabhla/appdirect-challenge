@@ -7,12 +7,21 @@ import com.appdirect.app.domain.repository.SubscriptionUserDao;
 import com.appdirect.app.dto.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 
+/**
+ * This implementation validates the existence of provided Entity type with ID field.
+ *
+ * Special handling for Subscription &  SubscriptionUser Entity:
+ *
+ *      > We validate Subscription with AccountIdentifier field.
+ *      > We validate SubscriptionUser with UUID field.
+ *
+ * If validation fails the method throws provided RuntimeException
+ */
 @Service
 public class ExistsValidator implements EventValidator {
 

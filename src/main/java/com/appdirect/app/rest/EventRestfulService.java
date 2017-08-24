@@ -17,6 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * This is the main entry point of application where AppDirect server will reach-out and deliver Event URL which needs
+ * to be fetched.
+ *
+ * From here on, event URL is fed into {@link EventProcessingService} to processing.
+ *
+ * Once processing is finished by service layer, an appropriate response will be sent back to AppDirect server.
+ */
+
 @Controller
 @RequestMapping(path = "/api/v1/integration/events")
 public class EventRestfulService {
@@ -27,6 +36,11 @@ public class EventRestfulService {
     @Autowired
     protected EventProcessingService eventProcessingService;
 
+    /**
+     * Entry Point on HTTP GET call on Path: /api/v1/integration/events.
+     * @param eventUrl URL where AppDirect Event needs to be fetched
+     * @return Success or Failure response with HTTP 200 status.
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<AbstractNotificationResponse> processEvent(@RequestParam("eventUrl") String eventUrl) {
         AbstractNotificationResponse response = null;

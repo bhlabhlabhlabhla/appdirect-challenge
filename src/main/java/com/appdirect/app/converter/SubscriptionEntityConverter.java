@@ -1,7 +1,5 @@
 package com.appdirect.app.converter;
 
-
-
 import com.appdirect.app.domain.entity.OrderItem;
 import com.appdirect.app.domain.entity.Subscription;
 import com.appdirect.app.dto.Event;
@@ -9,10 +7,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
+/**
+ * Subscription Entity Conversion Implementation.
+ */
 @Service
 public class SubscriptionEntityConverter implements EntityConverter<Subscription, Event> {
 
 
+    /**
+     * Here we handle the conversion of Event type dto object to Subscription type entity object.
+     * @param entity Subscription entity object
+     * @param dto Event dto object
+     */
     @Override
     public void toEntity(Subscription entity, Event dto) {
         if(dto == null) return;

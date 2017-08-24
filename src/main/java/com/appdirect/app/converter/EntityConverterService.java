@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 
+/**
+ * Service layer for Dto to Entity conversion.
+ *
+ * Here based on provided DTO type we handle the conversion to entity type object.
+ */
 @Service
 public class EntityConverterService {
 
@@ -24,6 +29,13 @@ public class EntityConverterService {
     @Qualifier("subscriptionUserEntityConverter")
     protected EntityConverter subscriptionUserEntityConverter;
 
+    /**
+     * Main Conversion entry point method which handles conversion based on dto type.
+     * @param entity Entity object
+     * @param dto DTO object
+     * @param <E> Entity type
+     */
+    @SuppressWarnings("unchecked")
     public <E extends Serializable> void convert(E entity, Object dto) {
         if(dto instanceof Event)
             subscriptionEntityConverter.toEntity(entity, dto);

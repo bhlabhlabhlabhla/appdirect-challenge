@@ -12,6 +12,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * This Implementation handles Updates of SubscriptionUser into database.
+ * Here main validations are:
+ *      > Check if assigned user exists or not. If it does then return Failure response with Not Found error message.
+ *
+ * Logic: We find the Subscription User related to Subscription based on provided Event data and we modify it as per received
+ *  event and persists into our database.
+ *
+ * On Success it returns empty Success response.
+ */
 @Service
 public class SubscriptionUserUpdateProcessor implements EventProcessor {
 

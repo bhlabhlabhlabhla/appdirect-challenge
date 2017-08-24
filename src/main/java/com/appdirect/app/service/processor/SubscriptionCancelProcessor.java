@@ -3,7 +3,6 @@ package com.appdirect.app.service.processor;
 
 import com.appdirect.app.converter.EntityConverterService;
 import com.appdirect.app.domain.entity.Subscription;
-import com.appdirect.app.domain.entity.type.SubscriptionState;
 import com.appdirect.app.domain.repository.SubscriptionDao;
 import com.appdirect.app.dto.AbstractNotificationResponse;
 import com.appdirect.app.dto.Event;
@@ -15,6 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * This Implementation handles Cancellation of Subscription into database.
+ * Here main validations are:
+ *      > Check if subscription exists or not. If it does then return Failure response with Not Found error message.
+ *
+ * Logic: We find the subscription based on event data and we delete it from our database.
+ * On Success it returns empty Success response.
+ */
 @Service
 public class SubscriptionCancelProcessor implements EventProcessor {
 
@@ -36,7 +43,6 @@ public class SubscriptionCancelProcessor implements EventProcessor {
         eventValidatorService.validate(event);
 
         Subscription subscription = subscriptionDao.findByAccountIdentifier(event.getPayload().getAccount().getAccountIdentifier());
-        subscription.setState(SubscriptionState.CANCELLED);
         subscriptionDao.delete(subscription);
         logger.info("Subscription with AccountIdentifier: {} is Cancelled", subscription.getAccountIdentifier());
 

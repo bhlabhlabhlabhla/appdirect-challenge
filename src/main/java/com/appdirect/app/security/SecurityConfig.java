@@ -1,7 +1,8 @@
 package com.appdirect.app.security;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,12 +28,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * Main Configuration class which dictates security configurations into Spring Ecosystem.
+ * Here we define all the filters and OAuth signature verification implementations which needs to be handled.
+ *
+ * oAuth related code is same as provided in Spring Security examples. I don't do anything special here but just feed
+ * provided consumer key and secret from AppDirect account.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    protected org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SecurityConfig.class);
+    protected Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Value("${oauth.consumer.key}")
     private String consumerKey;
@@ -40,20 +48,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${oauth.consumer.secret}")
     private String consumerSecret;
 
+    /**
+     * HTTP custom configuration.
+     *
+     * All requests are defaulted to anonymous Authorization
+     * On Path '/api/v1/integration/**' we added following:
+     *      > Custom Filter to handle oAuth Signature verification on incoming requests.
+     *      > Authorizes all requests on this URL without authentication.
+     *
+     * @param http HTTP SecurityBuilder object fed by Spring
+     * @throws Exception Exception thrown in case something bad happens
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
         http.authorizeRequests().antMatchers("/**").permitAll().anyRequest().anonymous();
 
-        http.antMatcher("/api/v1/integration/**").csrf().disable()
-            .exceptionHandling().authenticationEntryPoint(new UnauthorizedRequestExceptionHandler())
-            .and()
+        http.antMatcher("/api/v1/integration/**")
+            //.exceptionHandling().authenticationEntryPoint(new UnauthorizedRequestExceptionHandler())
+            //.and()
             .authorizeRequests().anyRequest().permitAll()
             .and()
             .addFilterBefore(oAuthProviderProcessingFilter(), ConcurrentSessionFilter.class);
     }
 
+    /**
+     * Custom Filter to handle oAuth Signature verification.
+     * It instantiates Spring's OAuthProcessingFilterEntryPoint with consumer key and consumer secret from AppDirect security configuration
+     * @return Custom Filter
+     */
     @Bean
     public OAuthProviderProcessingFilter oAuthProviderProcessingFilter() {
 
@@ -69,11 +93,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
         filter.setConsumerDetailsService(consumerDetailsService());
-        filter.setTokenServices(inMemoryProviderTokenServices());
+        filter.setTokenServices(new InMemoryProviderTokenServices());
 
         return filter;
     }
 
+    /**
+     * Implementation of ConsumerDetailsService interface to feed oAuth security details into Spring Filter
+     * @return Custom Implementation of ConsumerDetailsService
+     */
     @Bean
     public ConsumerDetailsService consumerDetailsService() {
         final BaseConsumerDetails consumerDetails = new BaseConsumerDetails();
@@ -88,11 +116,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return consumerDetailsService;
     }
 
+    /**
+     * Configuration of Token service into Spring oAuth config
+     *
+     * Can be customized based on needs but we don't do anything special here.
+     * @return Instance of InMemoryProviderTokenServices
+     */
     @Bean
     public InMemoryProviderTokenServices inMemoryProviderTokenServices() {
         return new InMemoryProviderTokenServices();
     }
 
+    /**
+     * Implementation of Spring's ProtectedResourceDetails interface to set oAuth key and secret.
+     *
+     * @return ProtectedResourceDetails impl with AppDirect oAuth details.
+     */
     @Bean
     public ProtectedResourceDetails protectedResourceDetails() {
         final BaseProtectedResourceDetails resource = new BaseProtectedResourceDetails();
@@ -103,7 +142,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private class UnauthorizedRequestExceptionHandler implements AuthenticationEntryPoint {
 
-        private Logger logger = Logger.getLogger(UnauthorizedRequestExceptionHandler.class);
+        private Logger logger = LoggerFactory.getLogger(UnauthorizedRequestExceptionHandler.class);
 
         @Override
         public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
