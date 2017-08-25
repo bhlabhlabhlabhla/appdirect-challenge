@@ -36,7 +36,7 @@ Then run with Java:
  
 
 ### Frameworks used:
-* Spring Boot for Spring eco system
+* Spring Boot for Spring ecosystem
 * Spring Data for DAO operations 
 * Spring oAuth Security for oAuth Signature Verifications
 * HSQLDB for In Memory Relation database
