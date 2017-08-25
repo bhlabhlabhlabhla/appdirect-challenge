@@ -39,7 +39,7 @@ Then run with Java:
 * Spring Boot for Spring ecosystem
 * Spring Data for DAO operations 
 * Spring oAuth Security for oAuth Signature Verifications
-* HSQLDB for In Memory Relation database
+* HSQLDB for In Memory Relational database
 * Spring Thymeleaf for simple user interface
 * DataTables table plug-in
 * jQuery
