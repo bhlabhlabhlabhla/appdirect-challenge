@@ -40,9 +40,10 @@ Then run with Java:
 * Spring Data for DAO operations 
 * Spring oAuth Security for oAuth Signature Verifications
 * HSQLDB for In Memory Relational database
-* Spring Thymeleaf for simple user interface
+* Spring Thymeleaf for templates based UI
 * DataTables table plug-in
 * jQuery
+* Bootstrap
 
 
 ### Please note:
