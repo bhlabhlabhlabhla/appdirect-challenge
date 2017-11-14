@@ -15,7 +15,7 @@ public class MainController {
      */
     @RequestMapping("/")
     public String content() {
-        return "content_";
+        return "content";
     }
 
 }
