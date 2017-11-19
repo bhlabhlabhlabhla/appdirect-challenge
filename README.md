@@ -1,4 +1,4 @@
-https://travis-ci.org/bhlabhlabhlabhla/appdirect-challenge.svg?branch=master
+<img src='https://travis-ci.org/bhlabhlabhlabhla/appdirect-challenge.svg?branch=master'/>
 
 # AppDirect API Integration Challenge
 
